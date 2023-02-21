@@ -70,14 +70,14 @@ public:
 	VkDescriptorSetLayout descriptorSetLayout;
 	VkDescriptorSet descriptorSet;
 
-	VkSemaphore presentCompleteSemphore;
-	VkSemaphore renderCompleteSemphore;
+	VkSemaphore presentCompleteSemaphore;
+	VkSemaphore renderCompleteSemaphore;
 
-	std::vector<VkFence> queueCompleteFence;
+	std::vector<VkFence> queueCompleteFences;
 
 	VulkanExample() : VulkanExampleBase(ENABLE_VALIDATION)
 	{
-		title = "";
+		title = "My first vulkan triangle";
 		settings.overlay = false;
 
 		camera.type = Camera::CameraType::lookat;
@@ -102,10 +102,10 @@ public:
 		vkDestroyBuffer(device, uniformBufferVS.buffer, nullptr);
 		vkFreeMemory(device, uniformBufferVS.memory, nullptr);
 
-		vkDestroySemaphore(device, presentCompleteSemphore, nullptr);
-		vkDestroySemaphore(device, renderCompleteSemphore, nullptr);
+		vkDestroySemaphore(device, presentCompleteSemaphore, nullptr);
+		vkDestroySemaphore(device, renderCompleteSemaphore, nullptr);
 
-		for(auto fence:queueCompleteFence)
+		for (auto& fence : queueCompleteFences)
 		{
 			vkDestroyFence(device, fence, nullptr);
 		}
@@ -119,11 +119,11 @@ public:
 	uint32_t getMemoryTypeIndex(uint32_t typeBits, VkMemoryPropertyFlags properties)
 	{
 		// deviceMemoryProperties: Stores all available memory (type) properties for the physical device
-		for(uint32_t i=0; i < VulkanExampleBase::deviceMemoryProperties.memoryTypeCount; ++i)
+		for (uint32_t i = 0; i < deviceMemoryProperties.memoryTypeCount; i++)
 		{
 			if ((typeBits & 1) == 1)
 			{
-				if ((deviceMemoryProperties.memoryTypes[i].propertyFlags & properties) == 1)
+				if ((deviceMemoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
 				{
 					return i;
 				}
@@ -140,15 +140,15 @@ public:
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 		semaphoreCreateInfo.pNext = nullptr;
 
-		VK_CHECK_RESULT(vkCreateSemaphore(device, &semaphoreCreateInfo, nullptr, &presentCompleteSemphore));
-		VK_CHECK_RESULT(vkCreateSemaphore(device, &semaphoreCreateInfo, nullptr, &renderCompleteSemphore));
+		VK_CHECK_RESULT(vkCreateSemaphore(device, &semaphoreCreateInfo, nullptr, &presentCompleteSemaphore));
+		VK_CHECK_RESULT(vkCreateSemaphore(device, &semaphoreCreateInfo, nullptr, &renderCompleteSemaphore));
 
-		VkFenceCreateInfo fenceCreateInfo;
+		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		fenceCreateInfo.pNext = nullptr;
+		// fenceCreateInfo.pNext = nullptr;
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-		queueCompleteFence.resize(drawCmdBuffers.size());
-		for(auto& fence : queueCompleteFence)
+		queueCompleteFences.resize(drawCmdBuffers.size());
+		for (auto& fence : queueCompleteFences)
 		{
 			VK_CHECK_RESULT(vkCreateFence(device, &fenceCreateInfo, nullptr, &fence));
 		}
@@ -158,15 +158,15 @@ public:
 	VkCommandBuffer getCommandBuffer(bool begin)
 	{
 		VkCommandBuffer cmdBuffer;
-		VkCommandBufferAllocateInfo cmdBufferAI = {};
-		cmdBufferAI.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		cmdBufferAI.commandPool = cmdPool;
-		cmdBufferAI.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		cmdBufferAI.commandBufferCount = 1;
+		VkCommandBufferAllocateInfo cmdBufAllocateInfo = {};
+		cmdBufAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		cmdBufAllocateInfo.commandPool = cmdPool;
+		cmdBufAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		cmdBufAllocateInfo.commandBufferCount = 1;
 
-		VK_CHECK_RESULT(vkAllocateCommandBuffers(device, &cmdBufferAI, &cmdBuffer));
+		VK_CHECK_RESULT(vkAllocateCommandBuffers(device, &cmdBufAllocateInfo, &cmdBuffer));
 
-		if(begin)
+		if (begin)
 		{
 			VkCommandBufferBeginInfo cmdBufInfo = vks::initializers::commandBufferBeginInfo();
 			VK_CHECK_RESULT(vkBeginCommandBuffer(cmdBuffer, &cmdBufInfo));
@@ -208,17 +208,19 @@ public:
 	// 为每一个framebuffer 图像创建分离的命令缓冲区
 	void buildCommandBuffers()
 	{
-		VkCommandBufferBeginInfo cmdBufferBI = {};
-		cmdBufferBI.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		cmdBufferBI.pNext = nullptr;
+		VkCommandBufferBeginInfo cmdBufInfo = {};
+		cmdBufInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		cmdBufInfo.pNext = nullptr;
 
 		// 帧缓冲附件 loadOp 设置清零值
 		VkClearValue clearValues[2];
-		clearValues[0].color = {{0.0f, 0.0f, 0.2f, 1.0f}};
-		clearValues[1].depthStencil = {1.0f, 0};
+		clearValues[0].color = { { 0.0f, 0.0f, 0.2f, 1.0f } };
+		clearValues[1].depthStencil = { 1.0f, 0 };
 
 		VkRenderPassBeginInfo renderPassBI = {};
-		renderPassBI.sType = VK_STRUCTURE_TYPE_RENDER_PASS_ATTACHMENT_BEGIN_INFO;
+		// 代码编写错误：renderPassBI.sType = VK_STRUCTURE_TYPE_RENDER_PASS_ATTACHMENT_BEGIN_INFO;
+		renderPassBI.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassBI.pNext = nullptr;
 		renderPassBI.renderPass = renderPass;
 		renderPassBI.renderArea.offset.x = 0;
 		renderPassBI.renderArea.offset.y = 0;
@@ -231,14 +233,14 @@ public:
 		{
 			renderPassBI.framebuffer = frameBuffers[i];
 			
-			VK_CHECK_RESULT(vkBeginCommandBuffer(drawCmdBuffers[i], &cmdBufferBI));
+			VK_CHECK_RESULT(vkBeginCommandBuffer(drawCmdBuffers[i], &cmdBufInfo));
 			vkCmdBeginRenderPass(drawCmdBuffers[i], &renderPassBI, VK_SUBPASS_CONTENTS_INLINE);
 
 			VkViewport viewport = {};
 			viewport.height = (float)height;
 			viewport.width = (float)width;
-			viewport.minDepth = (float)0.0f;
-			viewport.maxDepth = (float)1.0f;
+			viewport.minDepth = (float) 0.0f;
+			viewport.maxDepth = (float) 1.0f;
 			vkCmdSetViewport(drawCmdBuffers[i], 0, 1, &viewport);
 
 			VkRect2D scissor = {};
@@ -249,12 +251,12 @@ public:
 			vkCmdSetScissor(drawCmdBuffers[i], 0, 1, &scissor);
 
 			vkCmdBindDescriptorSets(drawCmdBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout,
-									0, 1, &descriptorSet, 0, nullptr);
+									 0, 1, &descriptorSet, 0, nullptr);
 
 			vkCmdBindPipeline(drawCmdBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
 			
 			// 绑定vertex buffer
-			VkDeviceSize offsets[1] = {0};
+			VkDeviceSize offsets[1] = { 0 };
 			vkCmdBindVertexBuffers(drawCmdBuffers[i], 0, 1, &vertices.buffer, offsets);
 		
 			// 绑定index buffer
@@ -274,12 +276,12 @@ public:
 		VK_CHECK_RESULT(vkWaitForFences(device, 1, &waitFences[currentBuffer], VK_TRUE, UINT64_MAX));
 		VK_CHECK_RESULT(vkResetFences(device, 1, &waitFences[currentBuffer]));
 #else
-		VkResult acquire = swapChain.acquireNextImage(presentCompleteSemphore, &currentBuffer);
+		VkResult acquire = swapChain.acquireNextImage(presentCompleteSemaphore, &currentBuffer);
 		if (!((acquire == VK_SUCCESS) || (acquire == VK_SUBOPTIMAL_KHR))) {
 			VK_CHECK_RESULT(acquire);
 		}
-		VK_CHECK_RESULT(vkWaitForFences(device, 1, &queueCompleteFence[currentBuffer], VK_TRUE, UINT64_MAX));
-		VK_CHECK_RESULT(vkResetFences(device, 1, &queueCompleteFence[currentBuffer]));
+		VK_CHECK_RESULT(vkWaitForFences(device, 1, &queueCompleteFences[currentBuffer], VK_TRUE, UINT64_MAX));
+		VK_CHECK_RESULT(vkResetFences(device, 1, &queueCompleteFences[currentBuffer]));
 #endif
 		VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 		VkSubmitInfo submitInfo = {};
@@ -302,13 +304,13 @@ public:
 		submitFrame();
 
 #else
-		submitInfo.pWaitSemaphores = &presentCompleteSemphore;
-		submitInfo.pSignalSemaphores = &renderCompleteSemphore;
+		submitInfo.pWaitSemaphores = &presentCompleteSemaphore;
+		submitInfo.pSignalSemaphores = &renderCompleteSemaphore;
 
-		VK_CHECK_RESULT(vkQueueSubmit(queue, 1, &submitInfo, queueCompleteFence[currentBuffer]));
+		VK_CHECK_RESULT(vkQueueSubmit(queue, 1, &submitInfo, queueCompleteFences[currentBuffer]));
 
-		VkResult present = swapChain.queuePresent(queue, currentBuffer, renderCompleteSemphore);
-		if(!((present == VK_SUCCESS) || (present == VK_SUBOPTIMAL_KHR))){
+		VkResult present = swapChain.queuePresent(queue, currentBuffer, renderCompleteSemaphore);
+		if (!((present == VK_SUCCESS) || (present == VK_SUBOPTIMAL_KHR))) {
 			VK_CHECK_RESULT(present);
 		}
 #endif
@@ -323,20 +325,21 @@ public:
 			{ { -1.0f,  1.0f, 0.0f }, { 0.0f, 1.0f, 0.0f } },
 			{ {  0.0f, -1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f } }
 		};
-		uint32_t vertexBufferSize = static_cast<uint32_t>(vertexBuffer.size() * sizeof(Vertex));
+		//代码编写错误： uint32_t vertexBufferSize = static_cast<uint32_t>(vertexBuffer.size() * sizeof(Vertex));
+		uint32_t vertexBufferSize = static_cast<uint32_t>(vertexBuffer.size()) * sizeof(Vertex);
 
-		std::vector<uint32_t> indexBuffer = {0, 1, 2};
+		std::vector<uint32_t> indexBuffer = { 0, 1, 2 };
 		indices.count = static_cast<uint32_t>(indexBuffer.size());
 		uint32_t indexBufferSize = indices.count * sizeof(uint32_t);
 
-		VkMemoryAllocateInfo memAllocIf = {};
-		memAllocIf.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		VkMemoryAllocateInfo memAlloc = {};
+		memAlloc.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		VkMemoryRequirements memReqs;
 		void *data;
 
 		// CPU中的顶点数据的内存类型，不能完美适配GPU，所以需要通过在CPU上开辟staging buffers(临时缓冲)将顶点数据通过
 		// buffer copy命令传送到设备本地内存
-		if(useStagingBuffers)
+		if (useStagingBuffers)
 		{
 			// 静态数据如vertex和index应该存储到设备内存，被GPU接收
 			// 这个过程称为：staging buffers
@@ -364,12 +367,12 @@ public:
 
 			VK_CHECK_RESULT(vkCreateBuffer(device, &vertexBufferInfo, nullptr, &stagingBuffers.vertices.buffer));
 			vkGetBufferMemoryRequirements(device, stagingBuffers.vertices.buffer, &memReqs);
-			memAllocIf.allocationSize = memReqs.size;
-			memAllocIf.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-			VK_CHECK_RESULT(vkAllocateMemory(device, &memAllocIf, nullptr, &stagingBuffers.vertices.memory));
+			memAlloc.allocationSize = memReqs.size;
+			memAlloc.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+			VK_CHECK_RESULT(vkAllocateMemory(device, &memAlloc, nullptr, &stagingBuffers.vertices.memory));
 
 			// 2 复制
-			VK_CHECK_RESULT(vkMapMemory(device, stagingBuffers.vertices.memory, 0, memAllocIf.allocationSize, 0, &data));
+			VK_CHECK_RESULT(vkMapMemory(device, stagingBuffers.vertices.memory, 0, memAlloc.allocationSize, 0, &data));
 			memcpy(data, vertexBuffer.data(), vertexBufferSize);
 			vkUnmapMemory(device, stagingBuffers.vertices.memory);
 			VK_CHECK_RESULT(vkBindBufferMemory(device, stagingBuffers.vertices.buffer, stagingBuffers.vertices.memory, 0));
@@ -378,9 +381,9 @@ public:
 			vertexBufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;
 			VK_CHECK_RESULT(vkCreateBuffer(device, &vertexBufferInfo, nullptr, &vertices.buffer));
 			vkGetBufferMemoryRequirements(device, vertices.buffer, &memReqs);
-			memAllocIf.allocationSize = memReqs.size;
-			memAllocIf.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-			VK_CHECK_RESULT(vkAllocateMemory(device, &memAllocIf, nullptr, &vertices.memory));
+			memAlloc.allocationSize = memReqs.size;
+			memAlloc.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+			VK_CHECK_RESULT(vkAllocateMemory(device, &memAlloc, nullptr, &vertices.memory));
 			VK_CHECK_RESULT(vkBindBufferMemory(device, vertices.buffer, vertices.memory, 0));
 
 			// 对index data执行与vertex data的相同操作
@@ -391,9 +394,9 @@ public:
 
 			VK_CHECK_RESULT(vkCreateBuffer(device, &indexbufferInfo, nullptr, &stagingBuffers.indices.buffer));
 			vkGetBufferMemoryRequirements(device, stagingBuffers.indices.buffer, &memReqs);
-			memAllocIf.allocationSize = memReqs.size;
-			memAllocIf.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-			VK_CHECK_RESULT(vkAllocateMemory(device, &memAllocIf, nullptr, &stagingBuffers.indices.memory));
+			memAlloc.allocationSize = memReqs.size;
+			memAlloc.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+			VK_CHECK_RESULT(vkAllocateMemory(device, &memAlloc, nullptr, &stagingBuffers.indices.memory));
 			VK_CHECK_RESULT(vkMapMemory(device, stagingBuffers.indices.memory, 0, indexBufferSize, 0, &data));
 			memcpy(data, indexBuffer.data(), indexBufferSize);
 			vkUnmapMemory(device, stagingBuffers.indices.memory);
@@ -402,9 +405,9 @@ public:
 			indexbufferInfo.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;
 			VK_CHECK_RESULT(vkCreateBuffer(device, &indexbufferInfo, nullptr, &indices.buffer));
 			vkGetBufferMemoryRequirements(device, indices.buffer, &memReqs);
-			memAllocIf.allocationSize = memReqs.size;
-			memAllocIf.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-			VK_CHECK_RESULT(vkAllocateMemory(device, &memAllocIf, nullptr, &indices.memory));
+			memAlloc.allocationSize = memReqs.size;
+			memAlloc.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+			VK_CHECK_RESULT(vkAllocateMemory(device, &memAlloc, nullptr, &indices.memory));
 			VK_CHECK_RESULT(vkBindBufferMemory(device, indices.buffer, indices.memory, 0));
 
 			// 4 使用command buffer将data从host复制到设备
@@ -436,10 +439,10 @@ public:
 			vertexBufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
 			VK_CHECK_RESULT(vkCreateBuffer(device, &vertexBufferInfo, nullptr, &vertices.buffer));
 			vkGetBufferMemoryRequirements(device, vertices.buffer, &memReqs);
-			memAllocIf.allocationSize = memReqs.size;
-			memAllocIf.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-			VK_CHECK_RESULT(vkAllocateMemory(device, &memAllocIf, nullptr, &vertices.memory));
-			VK_CHECK_RESULT(vkMapMemory(device, vertices.memory, 0, memAllocIf.allocationSize, 0, &data));
+			memAlloc.allocationSize = memReqs.size;
+			memAlloc.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+			VK_CHECK_RESULT(vkAllocateMemory(device, &memAlloc, nullptr, &vertices.memory));
+			VK_CHECK_RESULT(vkMapMemory(device, vertices.memory, 0, memAlloc.allocationSize, 0, &data));
 			memcpy(data, vertexBuffer.data(), vertexBufferSize);
 			vkUnmapMemory(device, vertices.memory);
 			VK_CHECK_RESULT(vkBindBufferMemory(device, vertices.buffer, vertices.memory, 0));
@@ -450,11 +453,12 @@ public:
 			indexBufferInfo.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
 			VK_CHECK_RESULT(vkCreateBuffer(device, &indexBufferInfo, nullptr, &indices.buffer));
 			vkGetBufferMemoryRequirements(device, indices.buffer, &memReqs);
-			memAllocIf.allocationSize = memReqs.size;
-			memAllocIf.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-			VK_CHECK_RESULT(vkAllocateMemory(device, &memAllocIf, nullptr, &indices.memory));
-			VK_CHECK_RESULT(vkMapMemory(device, indices.memory, 0, memAllocIf.allocationSize, 0, &data));
-			memcpy(data, vertexBuffer.data(), indexBufferSize);
+			memAlloc.allocationSize = memReqs.size;
+			memAlloc.memoryTypeIndex = getMemoryTypeIndex(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+			VK_CHECK_RESULT(vkAllocateMemory(device, &memAlloc, nullptr, &indices.memory));
+			VK_CHECK_RESULT(vkMapMemory(device, indices.memory, 0, memAlloc.allocationSize, 0, &data));
+			//代码编写错误： memcpy(data, vertexBuffer.data(), indexBufferSize);
+			memcpy(data, indexBuffer.data(), indexBufferSize);
 			vkUnmapMemory(device, indices.memory);
 			VK_CHECK_RESULT(vkBindBufferMemory(device, indices.buffer, indices.memory, 0));
 		}
@@ -486,8 +490,8 @@ public:
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCI = {};
 		descriptorSetLayoutCI.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCI.bindingCount = 1;
 		descriptorSetLayoutCI.pNext = nullptr;
+		descriptorSetLayoutCI.bindingCount = 1;
 		descriptorSetLayoutCI.pBindings = &layoutBinding;
 
 		VK_CHECK_RESULT(vkCreateDescriptorSetLayout(device, &descriptorSetLayoutCI, nullptr, &descriptorSetLayout));
@@ -587,10 +591,11 @@ public:
 			attachments[1] = depthStencil.view;
 
 			VkFramebufferCreateInfo framebufferCI = {};
-			framebufferCI.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-			framebufferCI.pAttachments = attachments.data();
-			framebufferCI.attachmentCount = attachments.size();
+			framebufferCI.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			// 代码编写错误：framebufferCI.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 			framebufferCI.renderPass = renderPass;
+			framebufferCI.attachmentCount = static_cast<uint32_t>(attachments.size());
+			framebufferCI.pAttachments = attachments.data();
 			framebufferCI.width = width;
 			framebufferCI.height = height;
 			framebufferCI.layers = 1;
@@ -618,7 +623,8 @@ public:
 		attachments[1].format = depthFormat;
 		attachments[1].samples = VK_SAMPLE_COUNT_1_BIT;
 		attachments[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-		attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+		attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		// attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 		attachments[1].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 		attachments[1].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 		attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
@@ -629,20 +635,22 @@ public:
 		colorReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 		VkAttachmentReference depthReference = {};
-		colorReference.attachment = 1;
-		colorReference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+		// colorReference.attachment = 1;
+		// colorReference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+		depthReference.attachment = 1;
+		depthReference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
 		// subPass的描述 结构体
 		VkSubpassDescription subpassDes = {};
 		subpassDes.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;	// 指定使用的管线类型
 		subpassDes.colorAttachmentCount = 1;
 		subpassDes.pColorAttachments = &colorReference;
-		subpassDes.pDepthStencilAttachment = &depthReference;	// 描述深度/模板attachment在当前subPass中的使用
-		subpassDes.inputAttachmentCount = 0;	// 从上一个subPass传递过来的图像数据如何在当前subPass使用
+		subpassDes.pDepthStencilAttachment = &depthReference;			// 描述深度/模板attachment在当前subPass中的使用
+		subpassDes.inputAttachmentCount = 0;							// 从上一个subPass传递过来的图像数据如何在当前subPass使用
 		subpassDes.pInputAttachments = nullptr;
-		subpassDes.preserveAttachmentCount = 0;	// 保留上一个subPass未修改的图像数据
+		subpassDes.preserveAttachmentCount = 0;							// 保留上一个subPass未修改的图像数据
 		subpassDes.pPreserveAttachments = nullptr;
-		subpassDes.pResolveAttachments = nullptr;	// 指定每个color attachment对应的解析附着物，用于多采样渲染的解析操作
+		subpassDes.pResolveAttachments = nullptr;						// 指定每个color attachment对应的解析附着物，用于多采样渲染的解析操作
 
 		// 定义子渲染流程之间的依赖关系，描述子渲染流程将等待哪些条件完成后再开始执行，以及执行结束后触发哪些操作
 		std::array<VkSubpassDependency, 2> dependencies = {};
@@ -676,7 +684,7 @@ public:
 	}
 
 	// SPIR-V是一种与硬件和API无关的着色器语言，通过开源SRIPV-Tools库或Glslang工具编译生成
-	VkShaderModule loadSRIPVShader(std::string filename)
+	VkShaderModule loadSPIRVShader(std::string filename)
 	{
 		size_t shaderSize;
 		char *shaderCode = NULL;
@@ -721,7 +729,7 @@ public:
 		}
 		else
 		{
-			std::cerr << "Error: Could not open shader file\" " << filename << "\"" << std::endl;
+			std::cerr << "Error: Could not open shader file \"" << filename << "\"" << std::endl;
 			return VK_NULL_HANDLE;
 		}
 	}
@@ -801,38 +809,42 @@ public:
 		vertexInputBinding.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
 		// 描述顶点缓冲区中的顶点属性
-		std::array<VkVertexInputAttributeDescription, 2> vertexInputattributes;
+		std::array<VkVertexInputAttributeDescription, 2> vertexInputAttributs;
 		// 与顶点着色器中的layout保持一致
 		// layout (location = 0) in vec3 inPos;
 		// layout (location = 1) in vec3 inColor;
-		vertexInputattributes[0].binding = 0;
-		vertexInputattributes[0].location = 0;
-		vertexInputattributes[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-		vertexInputattributes[0].offset = offsetof(Vertex, position);
-		vertexInputattributes[0].binding = 0;
-		vertexInputattributes[0].location = 1;
-		vertexInputattributes[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-		vertexInputattributes[0].offset = offsetof(Vertex, color);
-
+		vertexInputAttributs[0].binding = 0;
+		vertexInputAttributs[0].location = 0;
+		vertexInputAttributs[0].format = VK_FORMAT_R32G32B32_SFLOAT;
+		vertexInputAttributs[0].offset = offsetof(Vertex, position);
+		// 代码编写错误：
+		vertexInputAttributs[1].binding = 0;
+		vertexInputAttributs[1].location = 1;
+		vertexInputAttributs[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+		vertexInputAttributs[1].offset = offsetof(Vertex, color);
+		// vertexInputAttributs[0].binding = 0;
+		// vertexInputAttributs[0].location = 1;
+		// vertexInputAttributs[0].format = VK_FORMAT_R32G32B32_SFLOAT;
+		// vertexInputAttributs[0].offset = offsetof(Vertex, color);
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCI = {};
 		vertexInputStateCI.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputStateCI.vertexBindingDescriptionCount = 1;
 		vertexInputStateCI.pVertexBindingDescriptions = &vertexInputBinding;
 		vertexInputStateCI.vertexAttributeDescriptionCount = 2;
-		vertexInputStateCI.pVertexAttributeDescriptions = vertexInputattributes.data();
+		vertexInputStateCI.pVertexAttributeDescriptions = vertexInputAttributs.data();
 
 		// 着色器
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = {};
 		// 顶点着色器
 		shaderStages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		shaderStages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-		shaderStages[0].module = loadSRIPVShader(getShadersPath() + "triangle/triangle.vert.spv");
+		shaderStages[0].module = loadSPIRVShader(getShadersPath() + "triangle/triangle.vert.spv");
 		shaderStages[0].pName = "main";		// shader的主要入口
 		assert(shaderStages[0].module != VK_NULL_HANDLE);
 		// 片段着色器
 		shaderStages[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		shaderStages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		shaderStages[1].module = loadSRIPVShader(getShadersPath() + "triangle/triangle.frag.spv");
+		shaderStages[1].module = loadSPIRVShader(getShadersPath() + "triangle/triangle.frag.spv");
 		shaderStages[1].pName = "main";
 		assert(shaderStages[1].module != VK_NULL_HANDLE);
 
@@ -888,8 +900,8 @@ public:
 	void updateUniformBuffers()
 	{
 		uboVS.projectionMatrix = camera.matrices.perspective;
-		uboVS.modelMatrix = glm::mat4(1.0f);
 		uboVS.viewMatrix = camera.matrices.view;
+		uboVS.modelMatrix = glm::mat4(1.0f);
 
 		uint8_t *pData;
 		VK_CHECK_RESULT(vkMapMemory(device, uniformBufferVS.memory, 0, sizeof(uboVS), 0, reinterpret_cast<void **>(&pData)));
@@ -913,7 +925,7 @@ public:
 
 	virtual void render()
 	{
-		if(!prepared)
+		if (!prepared)
 			return;
 		draw();
 	}
