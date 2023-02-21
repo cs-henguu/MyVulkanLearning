@@ -1,0 +1,256 @@
+Target dependency graph (86 targets)
+ZERO_CHECK in Project, no dependencies
+bloom in Project, depends on:
+ZERO_CHECK in Project (explicit)
+computecloth in Project, depends on:
+ZERO_CHECK in Project (explicit)
+computecullandlod in Project, depends on:
+ZERO_CHECK in Project (explicit)
+computeheadless in Project, depends on:
+ZERO_CHECK in Project (explicit)
+computenbody in Project, depends on:
+ZERO_CHECK in Project (explicit)
+computeparticles in Project, depends on:
+ZERO_CHECK in Project (explicit)
+computeraytracing in Project, depends on:
+ZERO_CHECK in Project (explicit)
+computeshader in Project, depends on:
+ZERO_CHECK in Project (explicit)
+conditionalrender in Project, depends on:
+ZERO_CHECK in Project (explicit)
+conservativeraster in Project, depends on:
+ZERO_CHECK in Project (explicit)
+debugmarker in Project, depends on:
+ZERO_CHECK in Project (explicit)
+deferred in Project, depends on:
+ZERO_CHECK in Project (explicit)
+deferredmultisampling in Project, depends on:
+ZERO_CHECK in Project (explicit)
+deferredshadows in Project, depends on:
+ZERO_CHECK in Project (explicit)
+descriptorbuffer in Project, depends on:
+ZERO_CHECK in Project (explicit)
+descriptorindexing in Project, depends on:
+ZERO_CHECK in Project (explicit)
+descriptorsets in Project, depends on:
+ZERO_CHECK in Project (explicit)
+displacement in Project, depends on:
+ZERO_CHECK in Project (explicit)
+distancefieldfonts in Project, depends on:
+ZERO_CHECK in Project (explicit)
+dynamicrendering in Project, depends on:
+ZERO_CHECK in Project (explicit)
+dynamicstate in Project, depends on:
+ZERO_CHECK in Project (explicit)
+dynamicuniformbuffer in Project, depends on:
+ZERO_CHECK in Project (explicit)
+gears in Project, depends on:
+ZERO_CHECK in Project (explicit)
+geometryshader in Project, depends on:
+ZERO_CHECK in Project (explicit)
+gltfloading in Project, depends on:
+ZERO_CHECK in Project (explicit)
+gltfscenerendering in Project, depends on:
+ZERO_CHECK in Project (explicit)
+gltfskinning in Project, depends on:
+ZERO_CHECK in Project (explicit)
+graphicspipelinelibrary in Project, depends on:
+ZERO_CHECK in Project (explicit)
+hdr in Project, depends on:
+ZERO_CHECK in Project (explicit)
+imgui in Project, depends on:
+ZERO_CHECK in Project (explicit)
+indirectdraw in Project, depends on:
+ZERO_CHECK in Project (explicit)
+inlineuniformblocks in Project, depends on:
+ZERO_CHECK in Project (explicit)
+inputattachments in Project, depends on:
+ZERO_CHECK in Project (explicit)
+instancing in Project, depends on:
+ZERO_CHECK in Project (explicit)
+meshshader in Project, depends on:
+ZERO_CHECK in Project (explicit)
+multisampling in Project, depends on:
+ZERO_CHECK in Project (explicit)
+multithreading in Project, depends on:
+ZERO_CHECK in Project (explicit)
+multiview in Project, depends on:
+ZERO_CHECK in Project (explicit)
+negativeviewportheight in Project, depends on:
+ZERO_CHECK in Project (explicit)
+occlusionquery in Project, depends on:
+ZERO_CHECK in Project (explicit)
+offscreen in Project, depends on:
+ZERO_CHECK in Project (explicit)
+oit in Project, depends on:
+ZERO_CHECK in Project (explicit)
+parallaxmapping in Project, depends on:
+ZERO_CHECK in Project (explicit)
+particlefire in Project, depends on:
+ZERO_CHECK in Project (explicit)
+pbrbasic in Project, depends on:
+ZERO_CHECK in Project (explicit)
+pbribl in Project, depends on:
+ZERO_CHECK in Project (explicit)
+pbrtexture in Project, depends on:
+ZERO_CHECK in Project (explicit)
+pipelines in Project, depends on:
+ZERO_CHECK in Project (explicit)
+pipelinestatistics in Project, depends on:
+ZERO_CHECK in Project (explicit)
+pushconstants in Project, depends on:
+ZERO_CHECK in Project (explicit)
+pushdescriptors in Project, depends on:
+ZERO_CHECK in Project (explicit)
+radialblur in Project, depends on:
+ZERO_CHECK in Project (explicit)
+rayquery in Project, depends on:
+ZERO_CHECK in Project (explicit)
+raytracingbasic in Project, depends on:
+ZERO_CHECK in Project (explicit)
+raytracingcallable in Project, depends on:
+ZERO_CHECK in Project (explicit)
+raytracingreflections in Project, depends on:
+ZERO_CHECK in Project (explicit)
+raytracingsbtdata in Project, depends on:
+ZERO_CHECK in Project (explicit)
+raytracingshadows in Project, depends on:
+ZERO_CHECK in Project (explicit)
+renderheadless in Project, depends on:
+ZERO_CHECK in Project (explicit)
+screenshot in Project, depends on:
+ZERO_CHECK in Project (explicit)
+shadowmapping in Project, depends on:
+ZERO_CHECK in Project (explicit)
+shadowmappingomni in Project, depends on:
+ZERO_CHECK in Project (explicit)
+shadowmappingcascade in Project, depends on:
+ZERO_CHECK in Project (explicit)
+specializationconstants in Project, depends on:
+ZERO_CHECK in Project (explicit)
+sphericalenvmapping in Project, depends on:
+ZERO_CHECK in Project (explicit)
+ssao in Project, depends on:
+ZERO_CHECK in Project (explicit)
+stencilbuffer in Project, depends on:
+ZERO_CHECK in Project (explicit)
+subpasses in Project, depends on:
+ZERO_CHECK in Project (explicit)
+terraintessellation in Project, depends on:
+ZERO_CHECK in Project (explicit)
+tessellation in Project, depends on:
+ZERO_CHECK in Project (explicit)
+textoverlay in Project, depends on:
+ZERO_CHECK in Project (explicit)
+texture in Project, depends on:
+ZERO_CHECK in Project (explicit)
+texture3d in Project, depends on:
+ZERO_CHECK in Project (explicit)
+texturearray in Project, depends on:
+ZERO_CHECK in Project (explicit)
+texturecubemap in Project, depends on:
+ZERO_CHECK in Project (explicit)
+texturecubemaparray in Project, depends on:
+ZERO_CHECK in Project (explicit)
+texturemipmapgen in Project, depends on:
+ZERO_CHECK in Project (explicit)
+texturesparseresidency in Project, depends on:
+ZERO_CHECK in Project (explicit)
+triangle in Project, depends on:
+ZERO_CHECK in Project (explicit)
+variablerateshading in Project, depends on:
+ZERO_CHECK in Project (explicit)
+vertexattributes in Project, depends on:
+ZERO_CHECK in Project (explicit)
+viewportarray in Project, depends on:
+ZERO_CHECK in Project (explicit)
+vulkanscene in Project, depends on:
+ZERO_CHECK in Project (explicit)
+wxhTriangle in Project, depends on:
+ZERO_CHECK in Project (explicit)
+ALL_BUILD in Project, depends on:
+bloom in Project (explicit)
+computecloth in Project (explicit)
+computecullandlod in Project (explicit)
+computeheadless in Project (explicit)
+computenbody in Project (explicit)
+computeparticles in Project (explicit)
+computeraytracing in Project (explicit)
+computeshader in Project (explicit)
+conditionalrender in Project (explicit)
+conservativeraster in Project (explicit)
+debugmarker in Project (explicit)
+deferred in Project (explicit)
+deferredmultisampling in Project (explicit)
+deferredshadows in Project (explicit)
+descriptorbuffer in Project (explicit)
+descriptorindexing in Project (explicit)
+descriptorsets in Project (explicit)
+displacement in Project (explicit)
+distancefieldfonts in Project (explicit)
+dynamicrendering in Project (explicit)
+dynamicstate in Project (explicit)
+dynamicuniformbuffer in Project (explicit)
+gears in Project (explicit)
+geometryshader in Project (explicit)
+gltfloading in Project (explicit)
+gltfscenerendering in Project (explicit)
+gltfskinning in Project (explicit)
+graphicspipelinelibrary in Project (explicit)
+hdr in Project (explicit)
+imgui in Project (explicit)
+indirectdraw in Project (explicit)
+inlineuniformblocks in Project (explicit)
+inputattachments in Project (explicit)
+instancing in Project (explicit)
+meshshader in Project (explicit)
+multisampling in Project (explicit)
+multithreading in Project (explicit)
+multiview in Project (explicit)
+negativeviewportheight in Project (explicit)
+occlusionquery in Project (explicit)
+offscreen in Project (explicit)
+oit in Project (explicit)
+parallaxmapping in Project (explicit)
+particlefire in Project (explicit)
+pbrbasic in Project (explicit)
+pbribl in Project (explicit)
+pbrtexture in Project (explicit)
+pipelines in Project (explicit)
+pipelinestatistics in Project (explicit)
+pushconstants in Project (explicit)
+pushdescriptors in Project (explicit)
+radialblur in Project (explicit)
+rayquery in Project (explicit)
+raytracingbasic in Project (explicit)
+raytracingcallable in Project (explicit)
+raytracingreflections in Project (explicit)
+raytracingsbtdata in Project (explicit)
+raytracingshadows in Project (explicit)
+renderheadless in Project (explicit)
+screenshot in Project (explicit)
+shadowmapping in Project (explicit)
+shadowmappingomni in Project (explicit)
+shadowmappingcascade in Project (explicit)
+specializationconstants in Project (explicit)
+sphericalenvmapping in Project (explicit)
+ssao in Project (explicit)
+stencilbuffer in Project (explicit)
+subpasses in Project (explicit)
+terraintessellation in Project (explicit)
+tessellation in Project (explicit)
+textoverlay in Project (explicit)
+texture in Project (explicit)
+texture3d in Project (explicit)
+texturearray in Project (explicit)
+texturecubemap in Project (explicit)
+texturecubemaparray in Project (explicit)
+texturemipmapgen in Project (explicit)
+texturesparseresidency in Project (explicit)
+triangle in Project (explicit)
+variablerateshading in Project (explicit)
+vertexattributes in Project (explicit)
+viewportarray in Project (explicit)
+vulkanscene in Project (explicit)
+wxhTriangle in Project (explicit)
+ZERO_CHECK in Project (explicit)

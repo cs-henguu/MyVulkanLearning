@@ -1,0 +1,100 @@
+Detecting C OpenMP version failed with the following output:
+Change Dir: /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/xcodebuild -project CMAKE_TRY_COMPILE.xcodeproj build -target cmTC_234a4 -parallelizeTargets -configuration Debug -hideShellScriptEnvironment && Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project CMAKE_TRY_COMPILE.xcodeproj build -target cmTC_234a4 -parallelizeTargets -configuration Debug -hideShellScriptEnvironment
+
+User defaults from command line:
+    HideShellScriptEnvironment = YES
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Computing target dependency graph and provisioning inputs
+
+Create build description
+Build description signature: a092186143eef3bb14c5c781d66d3db7
+Build description path: /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/build/XCBuildData/a092186143eef3bb14c5c781d66d3db7-desc.xcbuild
+
+note: Building targets in dependency order
+CreateBuildDirectory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.xcodeproj
+    builtin-create-build-directory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+
+CreateBuildDirectory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/EagerLinkingTBDs
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.xcodeproj
+    builtin-create-build-directory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/EagerLinkingTBDs
+
+CreateBuildDirectory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/Debug
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.xcodeproj
+    builtin-create-build-directory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/Debug
+
+WriteAuxiliaryFile /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/Objects-normal/arm64/cmTC_234a4.LinkFileList (in target 'cmTC_234a4' from project 'CMAKE_TRY_COMPILE')
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+    write-file /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/Objects-normal/arm64/cmTC_234a4.LinkFileList
+
+CompileC /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/Objects-normal/arm64/OpenMPCheckVersion.o /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/FindOpenMP/OpenMPCheckVersion.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'cmTC_234a4' from project 'CMAKE_TRY_COMPILE')
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -target arm64-apple-macos13.1 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-return-type -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wno-unused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-float-conversion -Wno-non-literal-null-conversion -Wno-objc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -DCMAKE_INTDIR\=\"Debug\" -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fstrict-aliasing -Wdeprecated-declarations -g -Wno-sign-conversion -Wno-infinite-recursion -Wno-comma -Wno-block-capture-autoreleasing -Wno-strict-prototypes -Wno-semicolon-before-method-body -I/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/Debug/include -I/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/DerivedSources-normal/arm64 -I/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/DerivedSources/arm64 -I/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/DerivedSources -F/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/Debug -Xclang -fopenmp -MMD -MT dependencies -MF /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/Objects-normal/arm64/OpenMPCheckVersion.d --serialize-diagnostics /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/Objects-normal/arm64/OpenMPCheckVersion.dia -c /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/FindOpenMP/OpenMPCheckVersion.c -o /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/Objects-normal/arm64/OpenMPCheckVersion.o
+/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/FindOpenMP/OpenMPCheckVersion.c:3:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+1 error generated.
+
+** BUILD FAILED **
+
+
+The following build commands failed:
+	CompileC /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_234a4.build/Objects-normal/arm64/OpenMPCheckVersion.o /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/FindOpenMP/OpenMPCheckVersion.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'cmTC_234a4' from project 'CMAKE_TRY_COMPILE')
+(1 failure)
+
+
+
+Detecting CXX OpenMP version failed with the following output:
+Change Dir: /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/xcodebuild -project CMAKE_TRY_COMPILE.xcodeproj build -target cmTC_14b21 -parallelizeTargets -configuration Debug -hideShellScriptEnvironment && Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project CMAKE_TRY_COMPILE.xcodeproj build -target cmTC_14b21 -parallelizeTargets -configuration Debug -hideShellScriptEnvironment
+
+User defaults from command line:
+    HideShellScriptEnvironment = YES
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Computing target dependency graph and provisioning inputs
+
+Create build description
+Build description signature: 6d397e15958823e41ed63d23afcf732e
+Build description path: /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/build/XCBuildData/6d397e15958823e41ed63d23afcf732e-desc.xcbuild
+
+note: Building targets in dependency order
+CreateBuildDirectory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.xcodeproj
+    builtin-create-build-directory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+
+CreateBuildDirectory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/EagerLinkingTBDs
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.xcodeproj
+    builtin-create-build-directory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/EagerLinkingTBDs
+
+CreateBuildDirectory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/Debug
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.xcodeproj
+    builtin-create-build-directory /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/Debug
+
+CompileC /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/Objects-normal/arm64/OpenMPCheckVersion.o /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/FindOpenMP/OpenMPCheckVersion.cpp normal arm64 c++ com.apple.compilers.llvm.clang.1_0.compiler (in target 'cmTC_14b21' from project 'CMAKE_TRY_COMPILE')
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -target arm64-apple-macos13.1 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-return-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wno-unused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-float-conversion -Wno-non-literal-null-conversion -Wno-objc-literal-conversion -Wshorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -Wno-implicit-fallthrough -DCMAKE_INTDIR\=\"Debug\" -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -g -Wno-sign-conversion -Wno-infinite-recursion -Wno-move -Wno-comma -Wno-block-capture-autoreleasing -Wno-strict-prototypes -Wno-range-loop-analysis -Wno-semicolon-before-method-body -I/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/Debug/include -I/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/DerivedSources-normal/arm64 -I/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/DerivedSources/arm64 -I/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/DerivedSources -F/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/Debug -Xclang -fopenmp -MMD -MT dependencies -MF /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/Objects-normal/arm64/OpenMPCheckVersion.d --serialize-diagnostics /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/Objects-normal/arm64/OpenMPCheckVersion.dia -c /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/FindOpenMP/OpenMPCheckVersion.cpp -o /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/Objects-normal/arm64/OpenMPCheckVersion.o
+/Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/FindOpenMP/OpenMPCheckVersion.cpp:3:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+1 error generated.
+
+WriteAuxiliaryFile /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/Objects-normal/arm64/cmTC_14b21.LinkFileList (in target 'cmTC_14b21' from project 'CMAKE_TRY_COMPILE')
+    cd /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp
+    write-file /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/Objects-normal/arm64/cmTC_14b21.LinkFileList
+
+** BUILD FAILED **
+
+
+The following build commands failed:
+	CompileC /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/CMakeTmp/CMAKE_TRY_COMPILE.build/Debug/cmTC_14b21.build/Objects-normal/arm64/OpenMPCheckVersion.o /Users/bytedance/Documents/Bydance/Vulkan/Vulkan-master/examples/CMakeFiles/FindOpenMP/OpenMPCheckVersion.cpp normal arm64 c++ com.apple.compilers.llvm.clang.1_0.compiler (in target 'cmTC_14b21' from project 'CMAKE_TRY_COMPILE')
+(1 failure)
+
+
+
